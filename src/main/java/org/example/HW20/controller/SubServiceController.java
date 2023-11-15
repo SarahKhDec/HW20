@@ -4,7 +4,7 @@ import org.example.HW20.dto.subservice.GetSubServiceDto;
 import org.example.HW20.dto.subservice.SubServiceDto;
 import org.example.HW20.dto.subservice.UpdateSubServiceDto;
 import org.example.HW20.entity.SubService;
-import org.example.HW20.mappers.SubServiceMapperImpl;
+import org.example.HW20.mappers.SubServiceMapper;
 import org.example.HW20.service.SubServiceServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.List;
 public class SubServiceController {
 
     private final SubServiceServiceImpl service;
-    private final SubServiceMapperImpl subServiceMapper;
+    private final SubServiceMapper subServiceMapper;
 
     @PostMapping("/create")
     public GetSubServiceDto create(@Valid @RequestBody SubServiceDto subServiceDto) {

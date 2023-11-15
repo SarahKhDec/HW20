@@ -5,6 +5,7 @@ import org.example.HW20.dto.customer.CreateCustomerDto;
 import org.example.HW20.dto.customer.GetCustomerDto;
 import org.example.HW20.dto.customer.GetModifiedCustomerPasswordTimeDto;
 import org.example.HW20.entity.Customer;
+import org.example.HW20.mappers.CustomerMapper;
 import org.example.HW20.mappers.CustomerMapperImpl;
 import org.example.HW20.service.CustomerServiceImpl;
 import jakarta.validation.Valid;
@@ -19,7 +20,7 @@ import java.util.List;
 public class CustomerController {
 
     private final CustomerServiceImpl customerService;
-    private final CustomerMapperImpl customerMapper;
+    private final CustomerMapper customerMapper;
 
     @PostMapping("/create")
     public GetCustomerDto create(@Valid @RequestBody CreateCustomerDto customerDto) {
@@ -27,8 +28,8 @@ public class CustomerController {
         return customerMapper.customerToDto(customerService.create(customer));
     }
 
-    @GetMapping("/findById/{id}")
-    public GetCustomerDto findById(@PathVariable Long id) {
+    @GetMapping("/findById")
+    public GetCustomerDto findById(@RequestParam Long id) {
         return customerMapper.customerToDto(customerService.findById(id));
     }
 

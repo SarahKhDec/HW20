@@ -3,6 +3,7 @@ package org.example.HW20.controller;
 import org.example.HW20.dto.service.GetServicesDto;
 import org.example.HW20.dto.service.ServicesDto;
 import org.example.HW20.entity.Services;
+import org.example.HW20.mappers.ServicesMapper;
 import org.example.HW20.mappers.ServicesMapperImpl;
 import org.example.HW20.service.ServicesServiceImpl;
 import jakarta.validation.Valid;
@@ -17,7 +18,7 @@ import java.util.List;
 public class ServicesController {
 
     private final ServicesServiceImpl service;
-    private final ServicesMapperImpl servicesMapper;
+    private final ServicesMapper servicesMapper;
 
     @PostMapping("/create")
     public GetServicesDto create(@Valid @RequestBody ServicesDto servicesDto) {

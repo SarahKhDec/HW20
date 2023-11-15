@@ -5,7 +5,7 @@ import org.example.HW20.dto.comment.CreateCommentDto;
 import org.example.HW20.dto.comment.GetCommentDto;
 import org.example.HW20.dto.comment.GetCommentForExpertDto;
 import org.example.HW20.entity.Comments;
-import org.example.HW20.mappers.CommentMapperImpl;
+import org.example.HW20.mappers.CommentMapper;
 import org.example.HW20.service.CommentServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import java.util.List;
 public class CommentController {
 
     private final CommentServiceImpl commentService;
-    private final CommentMapperImpl commentMapper;
+    private final CommentMapper commentMapper;
 
     @PostMapping("/create")
     public GetCommentDto create(@Valid @RequestBody CreateCommentDto createCommentDto) {

@@ -1,8 +1,11 @@
 package org.example.HW20.controller;
 
+import org.example.HW20.dto.customer.CreateCustomerDto;
+import org.example.HW20.dto.customer.GetCustomerDto;
 import org.example.HW20.dto.expert.*;
+import org.example.HW20.entity.Customer;
 import org.example.HW20.entity.Expert;
-import org.example.HW20.mappers.ExpertMapperImpl;
+import org.example.HW20.mappers.ExpertMapper;
 import org.example.HW20.service.ExpertServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,17 +26,23 @@ import java.util.List;
 public class ExpertController {
 
     private final ExpertServiceImpl expertService;
-    private final ExpertMapperImpl expertMapper;
+    private final ExpertMapper expertMapper;
 
     @PostMapping("/create")
-    public GetExpertDto create(@Valid @ModelAttribute CreateExpertDto expertDto, BindingResult result,
-                               @RequestParam("image") MultipartFile file) throws IOException, NoSuchMethodException, MethodArgumentNotValidException {
-        if (result.hasErrors()) {
-            throw new MethodArgumentNotValidException(new MethodParameter(getClass().getDeclaredMethod("create", CreateExpertDto.class, BindingResult.class, MultipartFile.class), 0), result);
-        }
+    public GetExpertDto create(@Valid @RequestBody CreateExpertDto expertDto) throws IOException {
         Expert expert = expertMapper.expertDtoToExpert(expertDto);
-        return expertMapper.expertToDto(expertService.create(expert, file));
+        return expertMapper.expertToDto(expertService.create(expert));
     }
+
+//    @PostMapping("/create")
+//    public GetExpertDto create(@Valid @ModelAttribute CreateExpertDto expertDto, BindingResult result,
+//                               @RequestParam MultipartFile img) throws IOException, NoSuchMethodException, MethodArgumentNotValidException {
+//        if (result.hasErrors()) {
+//            throw new MethodArgumentNotValidException(new MethodParameter(getClass().getDeclaredMethod("create", CreateExpertDto.class, BindingResult.class, MultipartFile.class), 0), result);
+//        }
+//        Expert expert = expertMapper.expertDtoToExpert(expertDto);
+//        return expertMapper.expertToDto(expertService.create(expert, img));
+//    }
 
     @GetMapping("/findById/{id}")
     public GetExpertDto findById(@PathVariable Long id) {
@@ -69,9 +78,8 @@ public class ExpertController {
     }
 
     @PostMapping("/saveExpertImage")
-    public ResponseEntity<Object> saveExpertImage(@Valid @RequestBody SaveImageDto saveImageDto) throws IOException {
-        Expert expert = expertMapper.saveImageDtoToExpert(saveImageDto);
-        expertService.saveExpertImage(expert);
+    public ResponseEntity<Object> saveExpertImage(@Valid @RequestParam String email,MultipartFile img) throws IOException {
+        expertService.saveExpertImage(email, img);
         return new ResponseEntity<>("expert photo saved successfully", HttpStatus.OK);
     }
 

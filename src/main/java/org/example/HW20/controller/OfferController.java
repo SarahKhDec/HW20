@@ -1,14 +1,11 @@
 package org.example.HW20.controller;
 
-import org.example.HW20.dto.offer.CreateOfferDto;
-import org.example.HW20.dto.offer.GetOfferDto;
-import org.example.HW20.dto.offer.GetOfferForCustomerDto;
-import org.example.HW20.dto.offer.SelectOfferDto;
+import org.example.HW20.dto.offer.*;
 import org.example.HW20.dto.order.GetOrderByCustomerEmailDto;
 import org.example.HW20.dto.order.GetOrderWithOfferDto;
 import org.example.HW20.entity.Offers;
-import org.example.HW20.mappers.OfferMapperImpl;
-import org.example.HW20.mappers.OrderMapperImpl;
+import org.example.HW20.mappers.OfferMapper;
+import org.example.HW20.mappers.OrderMapper;
 import org.example.HW20.service.OfferServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +22,8 @@ import java.util.List;
 public class OfferController {
 
     private final OfferServiceImpl offerService;
-    private final OfferMapperImpl offerMapper;
-    private final OrderMapperImpl orderMapper;
+    private final OfferMapper offerMapper;
+    private final OrderMapper orderMapper;
 
     @PostMapping("/create")
     public GetOfferDto create(@Valid @RequestBody CreateOfferDto createOfferDto) {
@@ -35,15 +32,16 @@ public class OfferController {
     }
 
     @PostMapping("/findAll/orderByProposedPrice")
-    public List<GetOfferForCustomerDto> orderByProposedPrice(@Valid @RequestBody GetOrderByCustomerEmailDto getOrderByCustomerEmailDto) {
+    public List<OfferByScorePriceDto> orderByProposedPrice(@Valid @RequestBody GetOrderByCustomerEmailDto getOrderByCustomerEmailDto) {
         Offers offers = offerMapper.offerCustomerDtoToOffer(getOrderByCustomerEmailDto);
-        return offerMapper.offerListToDtoList(offerService.orderByProposedPrice(offers));
+        return (offerService.orderByProposedPrice(offers, getOrderByCustomerEmailDto.getId()));
     }
 
     @PostMapping("/findAll/orderByScore")
-    public List<GetOfferForCustomerDto> orderByScore(@Valid @RequestBody GetOrderByCustomerEmailDto getOrderByCustomerEmailDto) {
+    public List<OfferByScorePriceDto> orderByScore(@Valid @RequestBody GetOrderByCustomerEmailDto getOrderByCustomerEmailDto) {
         Offers offers = offerMapper.offerCustomerDtoToOffer(getOrderByCustomerEmailDto);
-        return offerMapper.offerListToDtoList(offerService.orderByScore(offers));
+        System.out.println(offerService.orderByScore(offers, getOrderByCustomerEmailDto.getId()));
+        return (offerService.orderByScore(offers, getOrderByCustomerEmailDto.getId()));
     }
 
     @PostMapping("/selectOffer")

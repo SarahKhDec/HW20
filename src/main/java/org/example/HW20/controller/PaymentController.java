@@ -7,7 +7,7 @@ import org.example.HW20.dto.payment.CreatePaymentDto;
 import org.example.HW20.dto.payment.ValidPaymentDto;
 import org.example.HW20.entity.Orders;
 import org.example.HW20.exceptions.captcha.ForbiddenException;
-import org.example.HW20.mappers.OrderMapperImpl;
+import org.example.HW20.mappers.OrderMapper;
 import org.example.HW20.service.OrderServiceImpl;
 import org.example.HW20.service.ValidateCaptcha;
 import jakarta.validation.Valid;
@@ -20,11 +20,12 @@ import org.springframework.web.servlet.view.RedirectView;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/payment")
+@CrossOrigin("*")
 public class PaymentController {
 
     private final OrderServiceImpl orderService;
     private final ValidateCaptcha service;
-    private final OrderMapperImpl orderMapper;
+    private final OrderMapper orderMapper;
     CreatePaymentDto createPayment;
 
     @PostMapping("/captcha")
@@ -46,7 +47,7 @@ public class PaymentController {
     @GetMapping("/redirect")
     public RedirectView redirect() {
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("http://localhost:63342/final_project_phase3/static/index.html?_ijt=91dnf238ruslbdq19tnelobr66&_ij_reload=RELOAD_ON_SAVE");
+        redirectView.setUrl("http://localhost:63342/HW20/static/index.html?_ijt=91dnf238ruslbdq19tnelobr66&_ij_reload=RELOAD_ON_SAVE");
         return redirectView;
     }
 
@@ -59,7 +60,7 @@ public class PaymentController {
     }
 
     @PostMapping("/finalPayment")
-    @CrossOrigin(origins = "http://localhost:63342")
+//    @CrossOrigin(origins = "http://localhost:8081")
     public ResponseEntity<String> finalPayment(@Valid @RequestBody ValidPaymentDto validPaymentDto, BindingResult result) {
         Orders orders = orderMapper.paymentDtoToOrder(createPayment);
         if(!result.hasErrors()) {

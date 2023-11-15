@@ -2,7 +2,7 @@ package org.example.HW20.controller;
 
 import org.example.HW20.dto.order.*;
 import org.example.HW20.entity.Orders;
-import org.example.HW20.mappers.OrderMapperImpl;
+import org.example.HW20.mappers.OrderMapper;
 import org.example.HW20.service.OrderServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import java.util.List;
 public class OrderController {
 
     private final OrderServiceImpl orderService;
-    private final OrderMapperImpl orderMapper;
+    private final OrderMapper orderMapper;
 
     @PostMapping("/create")
     public GetOrderDto create(@Valid @RequestBody CreateOrderDto createOrderDto) {
