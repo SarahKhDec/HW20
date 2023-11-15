@@ -1,5 +1,6 @@
 package org.example.HW20.service;
 
+import org.example.HW20.dto.offer.OfferByScorePriceDto;
 import org.example.HW20.entity.Customer;
 import org.example.HW20.entity.Expert;
 import org.example.HW20.entity.Offers;
@@ -56,16 +57,16 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public List<Offers> orderByProposedPrice(Offers offers) {
+    public List<OfferByScorePriceDto> orderByProposedPrice(Offers offers, Long id) {
         Customer customer = customerService.findByEmail(offers.getEmail());
-        Orders orders = orderService.findByIdAndCustomerId(offers.getOrder().getId(), customer.getId());
+        Orders orders = orderService.findByIdAndCustomerId(id, customer.getId());
         return offersRepository.findByOrderIdOrderByProposedPrice(orders.getId());
     }
 
     @Override
-    public List<Offers> orderByScore(Offers offers) {
+    public List<OfferByScorePriceDto> orderByScore(Offers offers, Long id) {
         Customer customer = customerService.findByEmail(offers.getEmail());
-        Orders orders = orderService.findByIdAndCustomerId(offers.getOrder().getId(), customer.getId());
+        Orders orders = orderService.findByIdAndCustomerId(id, customer.getId());
         return offersRepository.findByOrderIdOrderByExpertScore(orders.getId());
     }
 

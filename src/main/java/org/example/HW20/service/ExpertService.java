@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ExpertService {
 
-    Expert create(Expert expert, MultipartFile file) throws IOException;
+    Expert create(Expert expert) throws IOException;
     Expert findById(Long id);
     GetModifiedExpertTimeDto changePassword(Expert expert);
     Expert findByEmail(String email);
@@ -18,7 +18,7 @@ public interface ExpertService {
     GetModifiedExpertTimeDto confirmExpert(Long id);
     Expert addExpertToSubService(Expert expert);
     Expert removeExpertFromSubService(Expert expert);
-    void saveExpertImage(Expert expert) throws IOException;
+    void saveExpertImage(String email, MultipartFile img) throws IOException;
     Expert findAcceptedExpertByEmail(String email);
     void calculateExpertScore(Expert expert, LocalDateTime localDateTime);
     void updateExpertCredit(Long money, Expert expert);

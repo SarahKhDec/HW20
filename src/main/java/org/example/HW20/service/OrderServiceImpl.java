@@ -10,6 +10,7 @@ import org.example.HW20.repository.OrdersRepository;
 import org.example.HW20.utils.LocalDateTimeValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -112,6 +113,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public Orders paymentWithOneMethod(Orders orders) {
         Customer customer = customerService.findByEmail(orders.getEmail());
         Orders newOrder = checkDoneOrder(orders);
@@ -122,6 +124,7 @@ public class OrderServiceImpl implements OrderService {
         newOrder.setOrderStatus(OrderStatus.PAID);
         ordersRepository.save(newOrder);
         expertService.updateExpertCredit(money, newOrder.getOfferSelected().getExpert());
+        customer.setCredit(customer.getCredit()-newOrder.getOfferSelected().getProposedPrice());
         return newOrder;
     }
 

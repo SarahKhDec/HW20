@@ -16,6 +16,7 @@ import org.example.HW20.utils.SearchCriteria;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -40,11 +41,11 @@ public class ExpertServiceImpl implements ExpertService {
     private final ExpertSearch expertSearch;
 
     @Override
-    public Expert create(Expert expert, MultipartFile file) throws IOException {
+    public Expert create(Expert expert) throws IOException {
         try {
-            byte[] image = convertUrlToByteArray.converter(file);
+            //byte[] image = convertUrlToByteArray.converter(file);
             Expert newExpert = expertRepository.save(expert);
-            newExpert.setImageUrl(image);
+            //newExpert.setImageUrl(image);
             return expertRepository.save(newExpert);
         } catch (DataIntegrityViolationException e) {
             throw new UserExistException("expert with given email :-- " + expert.getEmail() + " -- has already registered.");
@@ -115,12 +116,14 @@ public class ExpertServiceImpl implements ExpertService {
     }
 
     @Override
-    public void saveExpertImage(Expert expert) throws IOException {
-        Expert newExpert = findByEmail(expert.getEmail());
-        byte[] data = newExpert.getImageUrl();
+    @Transactional
+    public void saveExpertImage(String email, MultipartFile img) throws IOException {
+        Expert newExpert = findByEmail(email);
+        byte[] data = img.getBytes();
+        newExpert.setImageUrl(data);
         ByteArrayInputStream bis = new ByteArrayInputStream(data);
         BufferedImage image = ImageIO.read(bis);
-        ImageIO.write(image, "jpg", new File("C:\\Users\\Sarai\\Documents\\HW19\\src\\main\\java\\org\\example\\HW19\\images\\" + newExpert.getLastname() + ".jpg"));
+        ImageIO.write(image, "jpg", new File("C:\\Users\\Sarai\\Documents\\HW20\\src\\main\\java\\org\\example\\HW20\\img\\" + newExpert.getLastname() + ".jpg"));
     }
 
     @Override
