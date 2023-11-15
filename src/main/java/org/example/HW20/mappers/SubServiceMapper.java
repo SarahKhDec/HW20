@@ -23,4 +23,5 @@ public interface SubServiceMapper {
     @Mapping(target = "expertSet", ignore = true)
     @Mapping(target = "services", ignore = true)
     SubService updateSubServiceDtoToDto(UpdateSubServiceDto updateSubServiceDto, @MappingTarget SubService subService);
+
 }

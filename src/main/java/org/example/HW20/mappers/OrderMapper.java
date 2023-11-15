@@ -13,6 +13,7 @@ public interface OrderMapper {
     GetOrderDto orderToDto(Orders orders);
     Orders orderDtoToOrder(CreateOrderDto createOrderDto);
     List<GetOrderForExpertDto> orderListToDtoList(List<Orders> ordersList);
+    GetOrderForExpertDto orderListToDtoList(Orders orders);
     GetOrderWithOfferDto orderToOfferDto(Orders orders);
     List<GetOrderWithOfferDto> orderListToOrderListDto(List<Orders> ordersList);
     Orders orderEmailDtoToOrder(GetOrderByEmailDto getOrderByEmailDto);

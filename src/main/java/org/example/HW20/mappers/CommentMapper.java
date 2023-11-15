@@ -16,4 +16,5 @@ public interface CommentMapper {
     GetCommentDto commentToDto(Comments comments);
     Comments commentForExpertToComment(CommentForExpertDto commentForExpertDto);
     List<GetCommentForExpertDto> commentToExpertScoreDto(List<Comments> comments);
+    GetCommentForExpertDto commentToExpertScoreDto(Comments comments);
 }

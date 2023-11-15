@@ -11,7 +11,7 @@ import java.util.List;
 public interface ExpertMapper {
 
     GetExpertDto expertToDto(Expert expert);
-    @Mapping(target = "imageUrl", ignore = true)
+//    @Mapping(target = "imageUrl", ignore = true)
     Expert expertDtoToExpert(CreateExpertDto createExpertDto);
     List<GetExpertDto> expertListToDtoList(List<Expert> expertList);
 
